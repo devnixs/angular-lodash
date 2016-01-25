@@ -137,15 +137,21 @@
       filter = _.bind(_[filterNames[0]], _),
       filterFactory = function() {return filter;};
 
-    _.each(filterNames, function(filterName) {
-      _.each([
-        lodashModule,
-        filtersModule,
-        ng.module('angular-lodash/filters/' + filterName, [])
-        ], function(module) {
-          module.filter(filterName, filterFactory);
-      });
-    });
+    if (angular.isFunction(_[filterNames[0]])) {
+        var
+          filter = _.bind(_[filterNames[0]], _),
+          filterFactory = function () { return filter; };
+
+        _.each(filterNames, function (filterName) {
+            _.each([
+              lodashModule,
+              filtersModule,
+              ng.module('angular-lodash/filters/' + filterName, [])
+            ], function (module) {
+                module.filter(filterName, filterFactory);
+            });
+        });
+    }
   });
 
   // end register angular-lodash/filters
