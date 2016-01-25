@@ -133,10 +133,6 @@
       filterNames = [filterNames];
     }
 
-    var
-      filter = _.bind(_[filterNames[0]], _),
-      filterFactory = function() {return filter;};
-
     if (angular.isFunction(_[filterNames[0]])) {
         var
           filter = _.bind(_[filterNames[0]], _),
@@ -148,6 +144,7 @@
               filtersModule,
               ng.module('angular-lodash/filters/' + filterName, [])
             ], function (module) {
+
                 module.filter(filterName, filterFactory);
             });
         });
